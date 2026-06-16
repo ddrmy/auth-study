@@ -7,9 +7,10 @@ class SessionsController {
   async create(request: Request, response: Response) {
 
     const fakeUser = {
-      id: 1,
+      id: "1",
       username: "gabriel",
-      password: "123"
+      password: "123",
+      role: "customer"
     }
     const { username, password } = request.body
 
@@ -17,8 +18,8 @@ class SessionsController {
       throw new AppError("Username e/ou senha inválidos", 401)
     }
 
-    const { secret} = authConfig.jwt
-    const token = sign({}, secret, {
+    const { secret } = authConfig.jwt
+    const token = sign({ role: fakeUser.role }, secret, {
       expiresIn: "1d" as string,
       subject: String(fakeUser.id)
     })
